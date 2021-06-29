@@ -42,8 +42,6 @@ class BarcodeScannerController {
 
       if (barcode != null && status.barcode.isEmpty) {
         status = BarcodeScannerStatus.barcode(barcode);
-        cameraController!.dispose();
-        await barcodeScanner.close();
       }
 
       return;
@@ -60,7 +58,7 @@ class BarcodeScannerController {
 
   void scanWithCamera() {
     status = BarcodeScannerStatus.available();
-    Future.delayed(Duration(seconds: 20)).then((value) {
+    Future.delayed(Duration(seconds: 15)).then((value) {
       if (status.hasBarcode == false)
         status = BarcodeScannerStatus.error("Timeout de leitura de boleto");
     });
@@ -109,11 +107,13 @@ class BarcodeScannerController {
       });
   }
 
-  void dispose() {
+  void dispose() async {
     statusNotifier.dispose();
     barcodeScanner.close();
     if (status.showCamera) {
       cameraController!.dispose();
     }
+    await barcodeScanner.close();
+    cameraController?.dispose();
   }
 }

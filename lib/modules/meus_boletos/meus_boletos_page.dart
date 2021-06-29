@@ -35,7 +35,9 @@ class _MeusBoletosPageState extends State<MeusBoletosPage> {
                   valueListenable: controller.boletosNotifier,
                   builder: (_, boletos, __) => AnimatedCard(
                     direction: AnimatedCardDirection.top,
-                    child: BoletoInfoWidget(size: boletos.length),
+                    child: BoletoInfoWidget(
+                      size: boletos.length,
+                    ),
                   ),
                 ),
               ),
